@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Ionic 2 GitHub App
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -15,7 +15,7 @@
   </ion-list>
 
   <div padding>
-    <button block (click)="getRepos()">Search</button>
+    <button ion-button block (click)="getRepos()">Search</button>
   </div>
 
   <ion-card *ngFor="let repo of foundRepos" (click)="goToDetails(repo)">
@@ -27,10 +27,10 @@
     </ion-card-content>
   </ion-card>
 
-  <h2> -- Default Template Stuff -- </h2>
+  <!-- <h2> Default Template Stuff </h2>
 
   The world is your oyster.
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  </p> -->
 </ion-content>
