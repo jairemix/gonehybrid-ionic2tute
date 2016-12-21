@@ -8,14 +8,23 @@ import { Http, Headers } from '@angular/http';
 export class GitHubService {
   constructor(private http: Http){
   }
-  getRepos(username){
+  getReposByKeyword(keyword: string){
+    let repos = this.http.get(`https://api.github.com/search/repositories?q=${keyword}`);
+    return repos;
+  }
+  getReposByUsername(username: string){
     //return Observable
     let repos = this.http.get(`https://api.github.com/users/${username}/repos`);
     return repos;
   }
-  getDetails(repo){
+  getDetails(repo: GitHubRepo){
     let headers = new Headers();
     headers.append('Accept', 'application/vnd.github.VERSION.html');
     return this.http.get(`${repo.url}/readme`, { headers: headers });
   }
+}
+
+export class GitHubRepo {
+  public url;
+  constructor() {}
 }

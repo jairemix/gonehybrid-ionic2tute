@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { GitHubService } from '../../app/github';
+import { GitHubService, GitHubRepo } from '../../app/github';
 
 @Component({
   selector: 'page-details',
@@ -8,8 +8,8 @@ import { GitHubService } from '../../app/github';
   providers: [GitHubService]
 })
 export class DetailsPage {
-  public readme = '';
-  public repo;
+  public readme: string = '';
+  public repo: GitHubRepo;
 
   constructor(private nav: NavController,
               private navParams: NavParams,
