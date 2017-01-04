@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { GitHubService, GitHubRepo } from '../../app/github';
 import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
+import * as Rx from 'rxjs';
+// import { Observable } from 'rxjs/Observable';
+// import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'page-home',
@@ -22,6 +23,7 @@ export class HomePage {
               private nav: NavController){
     //@debug
     (<any>window).homeCompo = this;
+    (<any>window).Rx = Rx;
   }
 
   getRepos(){
@@ -50,7 +52,7 @@ export class HomePage {
       err => console.error('❌', err),
       () => console.log('🐶 says: getRepos by keyword completed')
     );
-    Observable.forkJoin([usernameObs, keywordObs]).subscribe(
+    Rx.Observable.forkJoin([usernameObs, keywordObs]).subscribe(
       () => {
         delete this.states.$loading;
         this.states.$loaded = true;
