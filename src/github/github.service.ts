@@ -12,6 +12,10 @@ export class GitHubService {
     let repos = this.http.get(`https://api.github.com/search/repositories?q=${keyword}`);
     return repos;
   }
+  getUser (username: string) {
+    let user = this.http.get(`https://api.github.com/users/${username}`);
+    return user;
+  }
   getReposByUsername(username: string){
     //return Observable
     let repos = this.http.get(`https://api.github.com/users/${username}/repos`);
@@ -27,4 +31,11 @@ export class GitHubService {
 export class GitHubRepo {
   public url;
   constructor() {}
+}
+
+export class GitHubUser {
+  public login: string;
+  public name: string;
+  public location: string;
+  constructor () {}
 }

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{githubUser.login}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+  <div *ngIf="states.$loaded">
+    <ion-item-group>
+      <ion-card *ngFor="let repo of reposByUsername" (click)="goToDetails(repo)">
+        <ion-card-header>
+          {{ repo.name }}
+        </ion-card-header>
+        <ion-card-content>
+          {{ repo.description }}
+        </ion-card-content>
+      </ion-card>
+    </ion-item-group>
+  </div>
+
+</ion-content>

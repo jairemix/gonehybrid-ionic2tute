@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { GitHubService, GitHubRepo } from '../../app/github';
 import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
-import * as Rx from 'rxjs';
-// import { Observable } from 'rxjs/Observable';
-// import 'rxjs/add/observable/forkJoin';
+// import * as Rx from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
+import { GitHubRepo, GitHubService, GitHubUser } from '../../github/github.service';
+import { UserPage } from '../user/user';
 
 @Component({
   selector: 'page-home',
@@ -14,8 +15,9 @@ import * as Rx from 'rxjs';
 
 //TODO learn more about TypeScript types, ES6 module imports, RxJS Observable chaining
 export class HomePage {
-  public reposByUsername;
-  public reposByKeyword;
+  // public reposByUsername;
+  public userFound: GitHubUser;
+  public reposByKeyword: Array<GitHubRepo>; // or GithubRepo[]
   public searchQuery: string;
   public states: any = {};
 
@@ -23,36 +25,34 @@ export class HomePage {
               private nav: NavController){
     //@debug
     (<any>window).homeCompo = this;
-    (<any>window).Rx = Rx;
+    // (<any>window).Observable = Observable;
   }
 
   getRepos(){
     //subscribe to Observable
     console.log('🐶 says: getting repos');
     this.states.$loading = true;
-    let usernameObs = this.github.getReposByUsername(this.searchQuery);
+
+    let usernameObs = this.github.getUser(this.searchQuery);
     usernameObs.subscribe(
-      data => { //data handler
-        this.reposByUsername = data.json() as GitHubRepo;
-        console.log('🐶 has found: this.reposByUsername', this.reposByUsername);
+      data => {
+        this.userFound = data.json() as GitHubUser;
+        console.log('🐱 this.userFound', this.userFound);
       },
-      err => {
-        console.error('❌', err); // error handler
-      },
-      () => { //no errors handler
-        console.log('🐶 says: getRepos by username completed')
-      }
-    );
+      err => console.error('❌', err),
+      () => console.log('🐶 says: getUser by username completed')
+    )
+
     let keywordObs = this.github.getReposByKeyword(this.searchQuery);
     keywordObs.subscribe(
       data => {
-        this.reposByKeyword = data.json().items as GitHubRepo;
+        this.reposByKeyword = data.json().items as GitHubRepo[];
         console.log('🐶 has found: this.reposByKeyword', this.reposByKeyword);
       },
       err => console.error('❌', err),
       () => console.log('🐶 says: getRepos by keyword completed')
     );
-    Rx.Observable.forkJoin([usernameObs, keywordObs]).subscribe(
+    Observable.forkJoin([usernameObs, keywordObs]).subscribe(
       () => {
         delete this.states.$loading;
         this.states.$loaded = true;
@@ -65,8 +65,11 @@ export class HomePage {
   }
 
   goToDetails(repo){
-    console.log('go to details page', DetailsPage);
     this.nav.push(DetailsPage, { repo: repo });
+  }
+
+  goToUser(user){
+    this.nav.push(UserPage, { user: user });
   }
 
 }

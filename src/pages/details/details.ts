@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { GitHubService, GitHubRepo } from '../../app/github';
+import { GitHubRepo, GitHubService } from '../../github/github.service';
 
 @Component({
   selector: 'page-details',
@@ -19,10 +19,7 @@ export class DetailsPage {
     console.log('this.repo', this.repo);
 
     this.github.getDetails(this.repo).subscribe(
-      data => {
-        this.readme = data.text()
-        console.log('this.readme', this.readme);
-      },
+      data => this.readme = data.text(),
       err => {
         if (err.status === 404){
           this.readme = 'This repo does not have a README';

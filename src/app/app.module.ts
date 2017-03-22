@@ -3,12 +3,16 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DetailsPage } from '../pages/details/details';
+import { UserPage } from '../pages/user/user';
+import { GitHubUserComponent } from '../github/github-user.component';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    DetailsPage
+    DetailsPage,
+    UserPage,
+    GitHubUserComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -17,7 +21,9 @@ import { DetailsPage } from '../pages/details/details';
   entryComponents: [
     MyApp,
     HomePage,
-    DetailsPage
+    DetailsPage,
+    UserPage,
+    GitHubUserComponent
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

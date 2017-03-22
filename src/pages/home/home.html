@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic 2 GitHub App
+      Github App
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -15,25 +15,37 @@
   </ion-list>
 
   <div padding>
-    <button ion-button block (click)="getRepos()">Search</button>
+    <button ion-button block (click)="getRepos()">
+      <span *ngIf="!states.$loading">Search</span>
+      <ion-spinner class="spinner-light" *ngIf="states.$loading"></ion-spinner>
+    </button>
   </div>
 
-  <div class="spinner-center" padding *ngIf="states.$loading">
+  <!--<div class="spinner-center" padding *ngIf="states.$loading">
     <ion-spinner></ion-spinner>
-  </div>
+  </div>-->
 
   <div *ngIf="states.$loaded">
 
     <ion-item-group>
       <ion-item-divider color="light">Users</ion-item-divider>
-      <ion-card *ngFor="let repo of reposByUsername" (click)="goToDetails(repo)">
+      <github-user [githubUser]="userFound"></github-user>
+      <!--<ion-card (click)="goToUser(userFound)">
+        <ion-card-header>
+          {{userFound.login}}
+        </ion-card-header>
+        <ion-card-content>
+          {{userFound.name}} {{userFound.location}}
+        </ion-card-content>
+      </ion-card>-->
+      <!--<ion-card *ngFor="let repo of reposByUsername" (click)="goToDetails(repo)">
         <ion-card-header>
           {{ repo.name }}
         </ion-card-header>
         <ion-card-content>
           {{ repo.description }}
         </ion-card-content>
-      </ion-card>
+      </ion-card>-->
     </ion-item-group>
 
     <ion-item-group>
