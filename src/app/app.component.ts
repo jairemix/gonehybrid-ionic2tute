@@ -13,10 +13,16 @@ export class MyApp {
 
   constructor(platform: Platform) {
     platform.ready().then(() => {
+
+      console.log('should be line 17');
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+
+      console.warn('should be line 24');
+
     });
   }
 }
